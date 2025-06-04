@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- Permisos necesarios para speech_to_text -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Esta app necesita acceso al micrófono para convertir tu voz en texto.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Esta app utiliza reconocimiento de voz para ayudarte a generar textos automáticamente.</string>
 </dict>
 </plist>

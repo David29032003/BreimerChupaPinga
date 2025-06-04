@@ -57,21 +57,30 @@ class _AssistantPageState extends State<AssistantPage> {
     final response = await http.post(
       Uri.parse("https://openrouter.ai/api/v1/chat/completions"),
       headers: {
-        'Authorization': 'Bearer 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',
+        'Authorization':
+            'Bearer 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',
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://writevibe.app', // Puedes usar tu dominio real
+        'HTTP-Referer': 'https://writevibe.app',
         'X-Title': 'WriteVibeAssistant',
       },
       body: jsonEncode({
         "model": "deepseek/deepseek-chat:free",
         "messages": [
-          {"role": "user", "content": prompt}
+          {
+            "role": "system",
+            "content":
+                "Eres un experto en redacción, poesía, discursos y ensayos. Mejora el siguiente texto conservando su estilo y mensaje original, pero hazlo más claro, elegante y emotivo. Solo envía el mensaje referente a eso."
+          },
+          {
+            "role": "user",
+            "content": prompt
+          }
         ]
       }),
     );
 
     if (response.statusCode == 200) {
-      final decoded = jsonDecode(utf8.decode(response.bodyBytes)); // ✅ Corrige caracteres especiales
+      final decoded = jsonDecode(utf8.decode(response.bodyBytes));
       setState(() {
         _respuesta = decoded['choices'][0]['message']['content'];
       });
@@ -104,10 +113,7 @@ class _AssistantPageState extends State<AssistantPage> {
             SizedBox(height: 10),
             Expanded(
               child: SingleChildScrollView(
-                child: Text(
-                  _respuesta,
-                  style: TextStyle(fontSize: 16),
-                ),
+                child: Text(_respuesta, style: TextStyle(fontSize: 16)),
               ),
             ),
           ],
